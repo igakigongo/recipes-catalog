@@ -8,7 +8,9 @@
     ".vscode",
   ],
   "cSpell.words": [
-    "browserslist"
+    "browserslist",
+    "noopener",
+    "noreferrer"
   ],
   "git.ignoreLimitWarning": true
 }
