@@ -23,4 +23,4 @@ jobs:
       - name: install
         run: npm install
       - name: test
-        run: CI=true npm test -- --coverage
+        run: CI=true npm test -- --color --coverage
