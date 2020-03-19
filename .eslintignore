@@ -1,0 +1,4 @@
+setupTests.ts
+**/*.test.tsx
+**/build/*
+src/react-app-env.d.ts

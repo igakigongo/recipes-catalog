@@ -1,0 +1,14 @@
+{
+  "cSpell.ignorePaths": [
+    "**/package-lock.json",
+    "**/node_modules/**",
+    "**/vscode-extension/**",
+    "**/.git/objects/**",
+    "**/yarn.lock",
+    ".vscode",
+  ],
+  "cSpell.words": [
+    "browserslist"
+  ],
+  "git.ignoreLimitWarning": true
+}
