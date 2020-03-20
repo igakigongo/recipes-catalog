@@ -1,28 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addFilter } from '../actions/Filters';
-
-const defaultFilter = {
-  checked: true,
-  code: 'all',
-  name: '-- show all --',
-};
+import { addFilter, removeFilter } from '../actions/Filters';
 
 export const Filter = ({ dispatch, filters }) => (
-  <select>
-    {[defaultFilter, ...filters].map(x => (
-      <option
-        key={x.code}
-        onChange={() => {
-          dispatch(addFilter(x));
-        }}
-        value={x.code}
-      >
-        {x.name}
-      </option>
-    ))}
-  </select>
+  <>
+    <button className="btn btn-block btn-filter btn-sm" onClick={() => { dispatch(); }} type="button">
+      clear all filters
+    </button>
+    <ul className="list-unstyled mt-3">
+      {filters.sort(x => x.name).map(x => (
+        <li key={x.code} className="custom-control custom-checkbox">
+          <input
+            checked={x.selected}
+            className="custom-control-input"
+            id={`recipe-${x.code}`}
+            onChange={e => {
+              const { checked } = e.target;
+              if (checked) {
+                addFilter(x);
+                return;
+              }
+              removeFilter(x);
+            }}
+            type="checkbox"
+          />
+          <label className="custom-control-label" htmlFor={`recipe-${x.code}`}>
+            {x.name}
+          </label>
+        </li>
+      ))}
+    </ul>
+  </>
 );
 
 const mapStateToProps = state => {

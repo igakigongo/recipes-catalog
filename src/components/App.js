@@ -1,28 +1,27 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
+import { Navbar } from 'react-bootstrap';
 import WrappedFilter from '../containers/Filter';
 
 const App = () => (
-  <div className="App">
-    <header className="App-header">
-      <p>
-        Edit
-        {' '}
-        <code>src/App.tsx</code>
-        {' '}
-        and save to reload.
-      </p>
-      <WrappedFilter />
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
+  <>
+    <header>
+      <Navbar bg="dark" className="fixed-top" id="custom-navbar" variant="dark">
+        <div className="container-fluid">
+          <Navbar.Brand className="custom-brand">
+            Recipes&nbsp;
+            <span className="text-white">
+              Catalog
+            </span>
+          </Navbar.Brand>
+        </div>
+      </Navbar>
     </header>
-  </div>
+    <aside className="bg-light p-3 shadow-lg">
+      <WrappedFilter />
+    </aside>
+    <main />
+  </>
 );
 
 export default App;

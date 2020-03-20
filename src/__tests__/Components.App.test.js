@@ -5,9 +5,7 @@ import { createStore } from 'redux';
 import rootReducer from '../reducers';
 import App from '../components/App';
 
-test('renders learn react link', () => {
+test('it renders', () => {
   const store = createStore(rootReducer);
-  const { getByText } = render(<Provider store={store}><App /></Provider>);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  render(<Provider store={store}><App /></Provider>);
 });

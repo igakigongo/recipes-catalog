@@ -1,5 +1,5 @@
 // Action Types
-export const ADD_RECIPES = 'ADD_RECIPES';
+export const LOAD_RECIPES = 'ADD_RECIPES';
 
 // Action Creators
 
@@ -7,7 +7,7 @@ export const ADD_RECIPES = 'ADD_RECIPES';
  * add recipes action
  * @param {Array} recipes
  */
-export const addRecipes = recipes => ({
-  type: ADD_RECIPES,
+export const loadRecipes = recipes => ({
+  type: LOAD_RECIPES,
   recipes,
 });

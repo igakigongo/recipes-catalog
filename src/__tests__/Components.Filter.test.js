@@ -20,10 +20,10 @@ const setup = (filters = []) => {
 };
 
 describe('Filter', () => {
-  test('should render with the default filter item - all', () => {
+  test('should render without ingredients', () => {
     const { enzymeWrapper: wrapper } = setup();
-    expect(wrapper.find('select')).toHaveLength(1);
-    expect(wrapper.find('select').children()).toHaveLength(1);
+    expect(wrapper.find('ul')).toHaveLength(1);
+    expect(wrapper.find('ul').children()).toHaveLength(0);
   });
 
   test('renders all filter items', () => {
@@ -31,6 +31,6 @@ describe('Filter', () => {
       code: i + 1, name: `filter-${i+1}`})
     );
     const { enzymeWrapper: wrapper } = setup(filters);
-    expect(wrapper.find('select').children()).toHaveLength(11);
+    expect(wrapper.find('ul').children()).toHaveLength(10);
   });
 });

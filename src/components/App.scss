@@ -1,0 +1,60 @@
+$yellow: #ffc107;
+$black-faint: rgba(0, 0, 0, .8);
+$font-roboto: 'Roboto Condensed', sans-serif;
+$font-sacramento: 'Sacramento', cursive;
+
+$header-height: 3.125rem;
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden
+}
+
+#root {
+  display: grid;
+  grid-template-areas: "header header"
+                       "aside page"
+                       "aside page";
+
+  header {
+    grid-area: header;
+    
+  
+    .bg-dark {
+      background-color: #000 !important;
+    }
+  
+    .custom-brand {
+      color: $yellow;
+      font-family: $font-roboto;
+      font-size: 1.5rem;
+    }
+
+    .navbar {
+      height: $header-height;
+    }
+  }
+
+  aside {
+    font-family: $font-roboto;
+    margin-top: $header-height;
+    overflow-y: scroll;
+    width: 30%;
+  }
+
+  main {
+    width: 65%;
+  }
+}
+
+.btn-filter {
+  background-color: $yellow !important;
+  border: 1px solid $yellow !important;
+  color: #000 !important; 
+  font-family: $font-sacramento;
+  font-size: 1.5rem !important;
+}
+
+
+
+

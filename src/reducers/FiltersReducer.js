@@ -1,15 +1,33 @@
-import { ADD_FILTER, LOAD_FILTERS, REMOVE_FILTER } from '../actions/Filters';
+import {
+  ADD_FILTER, CLEAR_FILTERS, LOAD_FILTERS, REMOVE_FILTER,
+} from '../actions/Filters';
 
 const initialState = [];
 
 const filtersReducer = (state = initialState, action) => {
-  const { filter, type } = action;
+  const { type } = action;
   switch (type) {
     case ADD_FILTER: {
-      return [filter, ...state];
+      const { ingredient: { code } } = action;
+      const updatedIngredients = state.map(x => (x.code === code ? {
+        ...x,
+        checked: true,
+      } : x));
+      return updatedIngredients;
+    }
+    case CLEAR_FILTERS: {
+      return state.map(x => ({
+        ...x,
+        checked: false,
+      }));
     }
     case REMOVE_FILTER: {
-      return state.filter(x => x.code !== filter.code);
+      const { ingredient: { code } } = action;
+      const updatedIngredients = state.map(x => (x.code === code ? {
+        ...x,
+        checked: false,
+      } : x));
+      return updatedIngredients;
     }
     case LOAD_FILTERS: {
       const { filters } = action;

@@ -1,12 +1,17 @@
 // Action Types
 export const ADD_FILTER = 'ADD_FILTER';
+export const CLEAR_FILTERS = 'CLEAR_FILTERS';
 export const LOAD_FILTERS = 'LOAD_FILTERS';
 export const REMOVE_FILTER = 'REMOVE_FILTER';
 
 // Action Creators
-export const addFilter = filter => ({
+export const addFilter = ingredient => ({
   type: ADD_FILTER,
-  filter,
+  ingredient,
+});
+
+export const clearFilters = () => ({
+  type: CLEAR_FILTERS,
 });
 
 export const loadFilters = filters => ({
@@ -14,7 +19,7 @@ export const loadFilters = filters => ({
   filters,
 });
 
-export const removeFilter = filter => ({
+export const removeFilter = ingredient => ({
   type: REMOVE_FILTER,
-  filter,
+  ingredient,
 });

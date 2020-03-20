@@ -1,30 +1,48 @@
 import filtersReducer from '../reducers/FiltersReducer';
-import { addFilter, loadFilters, removeFilter } from '../actions/Filters';
+import { addFilter, clearFilters, loadFilters, removeFilter } from '../actions/Filters';
+
+const ingredientsData = require('../data/ingredients.json');
 
 describe('Filters Reducer', () => {
   let filters;
 
   beforeAll(() => {
-    filters = [
-      { code: 1, name: 'filter-1', checked: false },
-      { code: 2, name: 'filter-2', checked: false },
-    ];
+    filters = ingredientsData.map(x => {
+      const { code, name } = x;
+      return {
+        code,
+        checked: false,
+        name,
+      };
+    });
   });
 
-  it('adds a filter', () => {
-    const ingredient = { code: 3, name: 'broccoli', checked: false };
+  it('applies a filter', () => {
+    const ingredient = filters[0];
     const state = filtersReducer(filters, addFilter(ingredient));
-    expect(state.length).toEqual(3);
+    const newIngredient = state.find(x => x.code === ingredient.code);
+    expect(newIngredient.checked).toBe(true);
+  });
+
+  it('clears all filters', () => {
+    filters = filters.map((x, i) => (i % 2 === 0 ? {
+      ...x,
+      checked: true,
+    }: x));
+    expect(filters.filter(x => x.checked).length).toEqual(500);
+    const state = filtersReducer(filters, clearFilters());
+    expect(state.every(x => x.checked === false)).toBe(true);
   });
 
   it('removes a filter', () => {
-    const ingredientToRemove = filters[1];
-    const state = filtersReducer(filters, removeFilter(ingredientToRemove));
-    expect(state).toEqual([filters[0]]);
-    expect(state.length).toEqual(1);
+    filters[1].checked = true;
+    const ingredient = filters[1];
+    const state = filtersReducer(filters, removeFilter(ingredient));
+    const newIngredient = state.find(x => x.code === ingredient.code);
+    expect(newIngredient.checked).toBe(false);
   });
 
-  it('does not modify state for unknown actions', () => {
+  it('does not mutate state for unknown actions', () => {
     const initialState = [];
     const state = filtersReducer(initialState, {});
     expect(state).toEqual([]);
@@ -32,12 +50,8 @@ describe('Filters Reducer', () => {
 
   it('loads filters', () => {
     const initialState = [];
-    const filters = [
-      { code: 1, name: 'filter-1' },
-      { code: 2, name: 'filter-2' },
-    ];
     const state = filtersReducer(initialState, loadFilters(filters));
-    expect(state.length).toEqual(2);
+    expect(state.length).toEqual(1000);
     expect(state).toEqual(filters);
   });
 });
