@@ -11,6 +11,7 @@
     "browserslist",
     "noopener",
     "noreferrer",
+    "simplebar",
     "unstyled"
   ],
   "git.ignoreLimitWarning": true

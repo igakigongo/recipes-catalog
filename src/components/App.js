@@ -1,7 +1,10 @@
 import React from 'react';
 import './App.scss';
+import SimpleBar from 'simplebar-react';
+import 'simplebar/dist/simplebar.min.css';
 import { Navbar } from 'react-bootstrap';
-import WrappedFilter from '../containers/Filter';
+import ConnectedFilter from '../containers/Filter';
+import ConnectedIngredientsList from '../containers/Ingredients';
 
 const App = () => (
   <>
@@ -18,9 +21,15 @@ const App = () => (
       </Navbar>
     </header>
     <aside className="bg-light p-3 shadow-lg">
-      <WrappedFilter />
+      <SimpleBar style={{ maxHeight: '100%' }}>
+        <ConnectedFilter />
+      </SimpleBar>
     </aside>
-    <main />
+    <main className="bg-white p-3">
+      <div className="row">
+        <ConnectedIngredientsList />
+      </div>
+    </main>
   </>
 );
 

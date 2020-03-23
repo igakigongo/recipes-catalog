@@ -9,11 +9,10 @@ const filtersReducer = (state = initialState, action) => {
   switch (type) {
     case ADD_FILTER: {
       const { ingredient: { code } } = action;
-      const updatedIngredients = state.map(x => (x.code === code ? {
+      return state.map(x => (x.code === code ? {
         ...x,
         checked: true,
       } : x));
-      return updatedIngredients;
     }
     case CLEAR_FILTERS: {
       return state.map(x => ({

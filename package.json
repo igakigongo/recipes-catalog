@@ -17,7 +17,9 @@
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.0",
     "react-test-renderer": "^16.13.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "simplebar": "^5.1.0",
+    "simplebar-react": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

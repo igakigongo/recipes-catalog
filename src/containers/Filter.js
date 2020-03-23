@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addFilter, removeFilter } from '../actions/Filters';
+import { addFilter, clearFilters, removeFilter } from '../actions/Filters';
 
 export const Filter = ({ dispatch, filters }) => (
   <>
-    <button className="btn btn-block btn-filter btn-sm" onClick={() => { dispatch(); }} type="button">
+    <button className="btn btn-block btn-filter btn-sm" onClick={() => { dispatch(clearFilters()); }} type="button">
       clear all filters
     </button>
     <ul className="list-unstyled mt-3">
@@ -17,11 +17,8 @@ export const Filter = ({ dispatch, filters }) => (
             id={`recipe-${x.code}`}
             onChange={e => {
               const { checked } = e.target;
-              if (checked) {
-                addFilter(x);
-                return;
-              }
-              removeFilter(x);
+              const action = checked ? addFilter(x) : removeFilter(x);
+              dispatch(action);
             }}
             type="checkbox"
           />
