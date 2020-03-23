@@ -10,6 +10,16 @@ We list as much information as we can about the recipe as we can, such as
   * Visualized Ingredients
   * e.t.c
 
+### Sample Screenshots
+
+#### All Recipes
+
+![All Recipes - Not Filtered By Ingredients](screenshots/all-recipes.png)
+
+#### Recipes Filtered By Ingredients (Baking Soda, Banana and Egg Yolk)
+
+![Recipes Filtered By Ingredients](screenshots/filtered-by-ingredients.png)
+
 ### Demos
 
 For a live version of the application, please visit this [link](https://edward-recipes-catalog.herokuapp.com/) at heroku.
