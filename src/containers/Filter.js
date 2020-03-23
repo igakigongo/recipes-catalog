@@ -5,14 +5,20 @@ import { addFilter, clearFilters, removeFilter } from '../actions/Filters';
 
 export const Filter = ({ dispatch, filters }) => (
   <>
-    <button className="btn btn-block btn-filter btn-sm" onClick={() => { dispatch(clearFilters()); }} type="button">
+    <button
+      className="btn btn-block btn-filter btn-sm"
+      onClick={() => {
+        dispatch(clearFilters());
+      }}
+      type="button"
+    >
       clear all filters
     </button>
     <ul className="list-unstyled mt-3">
       {filters.sort(x => x.name).map(x => (
         <li key={x.code} className="custom-control custom-checkbox">
           <input
-            checked={x.selected}
+            checked={x.checked}
             className="custom-control-input"
             id={`recipe-${x.code}`}
             onChange={e => {

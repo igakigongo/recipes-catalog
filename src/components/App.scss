@@ -44,8 +44,6 @@ html, body, #root {
   aside {
     font-family: $font-roboto;
   }
-
-  // main {}
 }
 
 .btn-filter {
@@ -56,6 +54,7 @@ html, body, #root {
   font-size: 1.5rem !important;
 }
 
-
-
-
+.card-footer {
+  font-family: $font-roboto;
+  font-size: .8rem;
+}

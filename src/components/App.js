@@ -5,6 +5,7 @@ import 'simplebar/dist/simplebar.min.css';
 import { Navbar } from 'react-bootstrap';
 import ConnectedFilter from '../containers/Filter';
 import ConnectedIngredientsList from '../containers/Ingredients';
+import ConnectedRecipesList from '../containers/Recipes';
 
 const App = () => (
   <>
@@ -26,9 +27,10 @@ const App = () => (
       </SimpleBar>
     </aside>
     <main className="bg-white p-3">
-      <div className="row">
+      <SimpleBar style={{ maxHeight: '100%' }}>
         <ConnectedIngredientsList />
-      </div>
+        <ConnectedRecipesList />
+      </SimpleBar>
     </main>
   </>
 );
