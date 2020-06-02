@@ -1,41 +1,35 @@
-import {
-  ADD_FILTER, CLEAR_FILTERS, LOAD_FILTERS, REMOVE_FILTER,
-} from '../actions/Filters';
+import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = [];
-
-const filtersReducer = (state = initialState, action) => {
-  const { type } = action;
-  switch (type) {
-    case ADD_FILTER: {
-      const { ingredient: { code } } = action;
-      return state.map(x => (x.code === code ? {
-        ...x,
-        checked: true,
-      } : x));
-    }
-    case CLEAR_FILTERS: {
-      return state.map(x => ({
-        ...x,
-        checked: false,
-      }));
-    }
-    case REMOVE_FILTER: {
-      const { ingredient: { code } } = action;
+const filtersSlice = createSlice({
+  initialState: [],
+  name: 'filters',
+  reducers: {
+    addFilter: (state, action) => {
+      const { code } = action.payload;
+      const filter = state.find(x => x.code === code);
+      if (filter) filter.checked = true;
+    },
+    clearFilters: state => state.map(filter => ({
+      ...filter,
+      checked: false,
+    })),
+    removeFilter: (state, action) => {
+      const { code } = action.payload;
       const updatedIngredients = state.map(x => (x.code === code ? {
         ...x,
         checked: false,
       } : x));
       return updatedIngredients;
-    }
-    case LOAD_FILTERS: {
-      const { filters } = action;
-      return [...state, ...filters];
-    }
-    default: {
-      return state;
-    }
-  }
-};
+    },
+    loadFilters: (state, action) => action.payload,
+  },
+});
 
-export default filtersReducer;
+export const {
+  addFilter,
+  clearFilters,
+  removeFilter,
+  loadFilters,
+} = filtersSlice.actions;
+
+export default filtersSlice;

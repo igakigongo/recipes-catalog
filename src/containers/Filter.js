@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addFilter, clearFilters, removeFilter } from '../actions/Filters';
+import { addFilter, clearFilters, removeFilter } from '../reducers/FiltersReducer';
 
 export const Filter = ({ dispatch, filters }) => (
   <>
@@ -15,7 +15,7 @@ export const Filter = ({ dispatch, filters }) => (
       clear all filters
     </button>
     <ul className="list-unstyled mt-3">
-      {filters.sort(x => x.name).map(x => (
+      {[...filters].sort(x => x.name).map(x => (
         <li key={x.code} className="custom-control custom-checkbox">
           <input
             checked={x.checked}

@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './components/App';
 import store from './store';
-import { loadFilters } from './actions/Filters';
+import { loadFilters } from './reducers/FiltersReducer';
 
 const ingredients = require('./data/ingredients.json');
 

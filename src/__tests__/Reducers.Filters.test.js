@@ -1,10 +1,16 @@
-import filtersReducer from '../reducers/FiltersReducer';
-import { addFilter, clearFilters, loadFilters, removeFilter } from '../actions/Filters';
+import { createStore, combineReducers } from 'redux';
+import filtersSlice, {
+  addFilter,
+  clearFilters,
+  loadFilters,
+  removeFilter
+} from '../reducers/FiltersReducer';
 
 const ingredientsData = require('../data/ingredients.json');
 
 describe('Filters Reducer', () => {
   let filters;
+  let store;
 
   beforeAll(() => {
     filters = ingredientsData.map(x => {
@@ -17,10 +23,18 @@ describe('Filters Reducer', () => {
     });
   });
 
+  beforeEach(() => {
+    const reducer = combineReducers({
+      filters: filtersSlice.reducer
+    });
+    store = createStore(reducer);
+    store.dispatch(loadFilters(filters));
+  });
+
   it('applies a filter', () => {
     const ingredient = filters[0];
-    const state = filtersReducer(filters, addFilter(ingredient));
-    const newIngredient = state.find(x => x.code === ingredient.code);
+    store.dispatch(addFilter(ingredient));
+    const newIngredient = store.getState().filters.find(x => x.code === ingredient.code);
     expect(newIngredient.checked).toBe(true);
   });
 
@@ -30,27 +44,24 @@ describe('Filters Reducer', () => {
       checked: true,
     }: x));
     expect(filters.filter(x => x.checked).length).toEqual(500);
-    const state = filtersReducer(filters, clearFilters());
-    expect(state.every(x => x.checked === false)).toBe(true);
+    store.dispatch(clearFilters());
+    const { filters: filtersFromState } = store.getState();
+    expect(filtersFromState.every(x => x.checked === false)).toBe(true);
   });
 
   it('removes a filter', () => {
-    filters[1].checked = true;
-    const ingredient = filters[1];
-    const state = filtersReducer(filters, removeFilter(ingredient));
-    const newIngredient = state.find(x => x.code === ingredient.code);
+    const ingredient = filters[0];
+    store.dispatch(addFilter(ingredient));
+    let newIngredient = store.getState().filters.find(x => x.code === ingredient.code);
+    expect(newIngredient.checked).toBe(true);
+
+    store.dispatch(removeFilter(ingredient));
+    newIngredient = store.getState().filters.find(x => x.code === ingredient.code);
     expect(newIngredient.checked).toBe(false);
   });
 
-  it('does not mutate state for unknown actions', () => {
-    const initialState = [];
-    const state = filtersReducer(initialState, {});
-    expect(state).toEqual([]);
-  });
-
   it('loads filters', () => {
-    const initialState = [];
-    const state = filtersReducer(initialState, loadFilters(filters));
+    const state = store.getState().filters;
     expect(state.length).toEqual(1000);
     expect(state).toEqual(filters);
   });
