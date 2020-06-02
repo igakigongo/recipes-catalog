@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import api from '../api';
+import api from '../../api';
 
 const selectedIngredients = ingredients => ingredients.filter(x => x.checked);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16'
-import { Filter } from '../containers/Filter';
+import { Filter } from '../components/container/Filter';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -26,7 +26,7 @@ describe('Filter', () => {
     expect(wrapper.find('ul').children()).toHaveLength(0);
   });
 
-  test('renders all filter items', () => {
+  test('renders all filters', () => {
     const filters = [...Array(10)].map((_, i) => ({
       code: i + 1, name: `filter-${i+1}`})
     );

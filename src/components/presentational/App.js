@@ -3,9 +3,9 @@ import './App.scss';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 import { Navbar } from 'react-bootstrap';
-import ConnectedFilter from '../containers/Filter';
-import ConnectedIngredientsList from '../containers/Ingredients';
-import ConnectedRecipesList from '../containers/Recipes';
+import ConnectedFilter from '../container/Filter';
+import ConnectedIngredientsList from '../container/Ingredients';
+import ConnectedRecipesList from '../container/Recipes';
 
 const App = () => (
   <>

@@ -6,15 +6,15 @@ const api = (() => {
   /**
    * Get all recipes from the API
    */
-  const getRecipes = (ingredients = []) => {
+  const getRecipes = async (ingredients = []) => {
     if (ingredients.length === 0) {
-      return axios.get(`${BASE_URL}/search?apiKey=${API_KEY}&number=50`)
-        .then(({ data }) => data.results);
+      const { data } = await axios.get(`${BASE_URL}/search?apiKey=${API_KEY}&number=50`);
+      return data.results;
     }
 
     const query = ingredients.map(x => x.name).join('');
-    return axios.get(`${BASE_URL}/findByIngredients?apiKey=${API_KEY}&ingredients=${query}`)
-      .then(({ data }) => data);
+    const { data } = await axios.get(`${BASE_URL}/findByIngredients?apiKey=${API_KEY}&ingredients=${query}`);
+    return data;
   };
 
   return {

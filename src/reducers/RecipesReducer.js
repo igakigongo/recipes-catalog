@@ -1,17 +1,12 @@
-import { LOAD_RECIPES } from '../actions/Recipes';
+import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = [];
+const recipesSlice = createSlice({
+  initialState: [],
+  name: 'recipes',
+  reducers: {
+    loadRecipes: (state, action) => action.payload,
+  },
+});
 
-const recipesReducer = (state = initialState, action) => {
-  const { type } = action;
-  switch (type) {
-    case LOAD_RECIPES: {
-      return action.recipes;
-    }
-    default: {
-      return state;
-    }
-  }
-};
-
-export default recipesReducer;
+export const { loadRecipes } = recipesSlice.actions;
+export default recipesSlice;

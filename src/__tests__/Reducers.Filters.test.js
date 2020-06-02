@@ -1,16 +1,15 @@
-import { createStore, combineReducers } from 'redux';
-import filtersSlice, {
+import {
   addFilter,
   clearFilters,
   loadFilters,
   removeFilter
 } from '../reducers/FiltersReducer';
+import store from '../store';
 
 const ingredientsData = require('../data/ingredients.json');
 
 describe('Filters Reducer', () => {
   let filters;
-  let store;
 
   beforeAll(() => {
     filters = ingredientsData.map(x => {
@@ -24,10 +23,6 @@ describe('Filters Reducer', () => {
   });
 
   beforeEach(() => {
-    const reducer = combineReducers({
-      filters: filtersSlice.reducer
-    });
-    store = createStore(reducer);
     store.dispatch(loadFilters(filters));
   });
 

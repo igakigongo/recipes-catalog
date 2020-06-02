@@ -1,9 +1,8 @@
 import { combineReducers } from 'redux';
-import filters from './FiltersReducer';
-import recipesReducer from './RecipesReducer';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import filtersSlice from './FiltersReducer';
+import recipesSlice from './RecipesReducer';
 
 export default combineReducers({
-  filters: filters.reducer,
-  recipes: recipesReducer,
+  filters: filtersSlice.reducer,
+  recipes: recipesSlice.reducer,
 });
