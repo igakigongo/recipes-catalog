@@ -1,20 +1,23 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { BASE_URL } from '../../utils';
 import { fetchRecipes } from '../../api';
 import NoRecipesFound from '../presentational/NoRecipesFound';
 import Time from '../presentational/Time';
+import ROUTES from '../../routes';
 
 const selectedIngredients = ingredients => ingredients.filter(x => x.checked);
 
 const RecipesList = ({ dispatch, ingredients, recipesState: { data: recipes, fetching } }) => {
+  const history = useHistory();
   useEffect(() => {
     dispatch(fetchRecipes(selectedIngredients(ingredients)));
   }, [ingredients]);
 
-  const clickHandler = e => {
-    e.preventDefault();
+  const clickHandler = recipeId => {
+    history.push(`${ROUTES.RECIPE_DETAILS}/${recipeId}`);
   };
 
   if (fetching) {
@@ -42,8 +45,8 @@ const RecipesList = ({ dispatch, ingredients, recipesState: { data: recipes, fet
             <div className="col col-lg-2 recipe-item" key={id}>
               <div
                 className="card mb-3 shadow"
-                onClick={clickHandler}
-                onKeyPress={clickHandler}
+                onClick={() => { clickHandler(id); }}
+                onKeyPress={() => { clickHandler(id); }}
                 role="link"
                 tabIndex={index}
               >
