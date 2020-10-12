@@ -18,4 +18,4 @@ const recipesSlice = createSlice({
 });
 
 export const { loadRecipes, setFetching } = recipesSlice.actions;
-export default recipesSlice;
+export default recipesSlice.reducer;

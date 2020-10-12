@@ -1,6 +1,6 @@
-/* eslint-disable import/prefer-default-export */
-import { loadRecipes, setFetching } from '../reducers/RecipesReducer';
 import { API_KEY, BASE_API_URL } from '../utils';
+import { loadRecipes, setFetching } from '../reducers/RecipesReducer';
+import { setFetchingRecipeInstructions } from '../reducers/RecipeDetailsReducer';
 
 const axios = require('axios').default;
 
@@ -32,3 +32,16 @@ export const fetchRecipes = (ingredients = []) => dispatch => {
       dispatch(setFetching(false));
     });
 };
+
+export const fetchRecipeInstructions = id => dispatch => {
+  dispatch(setFetchingRecipeInstructions(true));
+
+  return axios
+    .get(`${BASE_API_URL}/recipes/${id}/analyzedInstructions`)
+    .then(({ data }) => {
+      console.log(data);
+    })
+    .finally(() => {
+      dispatch(setFetchingRecipeInstructions(false));
+    });
+}

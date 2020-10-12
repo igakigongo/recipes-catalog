@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './components/presentational/App';
 import store from './store';
+import { fetchRecipes } from './api';
 import { loadFilters } from './reducers/FiltersReducer';
 import './index.css';
 
@@ -15,6 +16,7 @@ const mappedIngredients = ingredients.map(x => ({
 }));
 
 store.dispatch(loadFilters(mappedIngredients));
+store.dispatch(fetchRecipes());
 
 render(
   <Router>
