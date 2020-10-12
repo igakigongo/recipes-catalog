@@ -3,11 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const recipeDetailsSlice = createSlice({
   initialState: {
-    data: {
-      fetchingInstructions: false,
-      instructions: [],
-      recipe: undefined
-    },
+    fetchingInstructions: false,
+    instructions: [],
+    recipe: undefined,
   },
   name: 'recipeDetails',
   reducers: {

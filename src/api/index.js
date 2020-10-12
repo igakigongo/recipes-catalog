@@ -37,7 +37,7 @@ export const fetchRecipeInstructions = id => dispatch => {
   dispatch(setFetchingRecipeInstructions(true));
 
   return axios
-    .get(`${BASE_API_URL}/recipes/${id}/analyzedInstructions`)
+    .get(`${BASE_API_URL}/recipes/${id}/analyzedInstructions?apiKey=${API_KEY}`)
     .then(({ data }) => {
       console.log(data);
     })

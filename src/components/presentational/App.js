@@ -6,7 +6,7 @@ import ROUTES from '../../routes';
 import ConnectedFilter from '../container/Filter';
 import ConnectedIngredientsList from '../container/Ingredients';
 import ConnectedRecipesList from '../container/Recipes';
-import RecipeDetails from './RecipeDetails';
+import RecipeDetails from '../container/RecipeDetails';
 import './App.scss';
 import 'simplebar/dist/simplebar.min.css';
 
