@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { BASE_URL } from '../../utils';
 import api from '../../api';
 import NoRecipesFound from '../presentational/NoRecipesFound';
 import Time from '../presentational/Time';
@@ -46,17 +47,17 @@ const RecipesList = ({ ingredients }) => {
                 onClick={clickHandler}
                 onKeyPress={clickHandler}
                 role="link"
-                tabIndex={index}
-              >
-                <img alt={image} className="card-img-top" src={`https://spoonacular.com/recipeImages/${id}-480x360.${imageType}`} />
+                tabIndex={index}>
+                <img alt={image}
+                  className="card-img-top"
+                  src={`${BASE_URL}/recipeImages/${id}-480x360.${imageType}`} />
                 <div className="card-body bg-warning">
                   <b>{title}</b>
                 </div>
                 {readyInMinutes && (
                   <div className="card-footer bg-dark text-white">
                     <Time minutes={readyInMinutes} />
-                  </div>
-                )}
+                  </div>)}
               </div>
             </div>
           );
