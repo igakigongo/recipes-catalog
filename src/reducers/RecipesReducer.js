@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const recipesSlice = createSlice({
@@ -10,8 +11,11 @@ const recipesSlice = createSlice({
     loadRecipes: (state, action) => {
       state.data = action.payload;
     },
+    setFetching: (state, action) => {
+      state.fetching = action.payload;
+    },
   },
 });
 
-export const { loadRecipes } = recipesSlice.actions;
+export const { loadRecipes, setFetching } = recipesSlice.actions;
 export default recipesSlice;

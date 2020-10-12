@@ -10,17 +10,20 @@ const selectedIngredients = ingredients => ingredients.filter(x => x.checked);
 
 const RecipesList = ({ dispatch, ingredients, recipesState: { data: recipes, fetching } }) => {
   useEffect(() => {
-    dispatch(fetchRecipes(selectedIngredients(ingredients)))
-      .then(() => {
-        window.jQuery('.recipes-grid').isotope({
-          itemSelector: '.recipe-item',
-        });
-      });
+    dispatch(fetchRecipes(selectedIngredients(ingredients)));
   }, [ingredients]);
 
   const clickHandler = e => {
     e.preventDefault();
   };
+
+  if (fetching) {
+    return (
+      <div style={{ textAlign: 'center' }}>
+        Loading.....!!
+      </div>
+    );
+  }
 
   return (recipes.length === 0 ? (<NoRecipesFound />) : (
     <div className="container-fluid">
@@ -42,17 +45,21 @@ const RecipesList = ({ dispatch, ingredients, recipesState: { data: recipes, fet
                 onClick={clickHandler}
                 onKeyPress={clickHandler}
                 role="link"
-                tabIndex={index}>
-                <img alt={image}
+                tabIndex={index}
+              >
+                <img
+                  alt={image}
                   className="card-img-top"
-                  src={`${BASE_URL}/recipeImages/${id}-480x360.${imageType}`} />
+                  src={`${BASE_URL}/recipeImages/${id}-480x360.${imageType}`}
+                />
                 <div className="card-body bg-warning">
                   <b>{title}</b>
                 </div>
                 {readyInMinutes && (
                   <div className="card-footer bg-dark text-white">
                     <Time minutes={readyInMinutes} />
-                  </div>)}
+                  </div>
+                )}
               </div>
             </div>
           );
@@ -65,10 +72,10 @@ const RecipesList = ({ dispatch, ingredients, recipesState: { data: recipes, fet
 RecipesList.propTypes = {
   dispatch: PropTypes.func.isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
-  recipes: PropTypes.shape({
+  recipesState: PropTypes.shape({
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
     fetching: PropTypes.bool.isRequired,
-  }),
+  }).isRequired,
 };
 
 const mapStateToProps = state => {
