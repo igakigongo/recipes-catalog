@@ -2,16 +2,16 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BASE_URL } from '../../utils';
-import api from '../../api';
+import { fetchRecipes } from '../../api';
 import NoRecipesFound from '../presentational/NoRecipesFound';
 import Time from '../presentational/Time';
 
 const selectedIngredients = ingredients => ingredients.filter(x => x.checked);
 
-const RecipesList = ({ ingredients }) => {
+const RecipesList = ({ dispatch, ingredients }) => {
   const [recipes, setRecipes] = useState([]);
   useEffect(() => {
-    api.getRecipes(selectedIngredients(ingredients))
+    dispatch(fetchRecipes(selectedIngredients(ingredients)))
       .then(data => {
         setRecipes(data);
       });
@@ -68,6 +68,7 @@ const RecipesList = ({ ingredients }) => {
 };
 
 RecipesList.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
