@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BASE_URL } from '../../utils';
@@ -8,19 +8,14 @@ import Time from '../presentational/Time';
 
 const selectedIngredients = ingredients => ingredients.filter(x => x.checked);
 
-const RecipesList = ({ dispatch, ingredients }) => {
-  const [recipes, setRecipes] = useState([]);
+const RecipesList = ({ dispatch, ingredients, recipesState: { data: recipes, fetching } }) => {
   useEffect(() => {
     dispatch(fetchRecipes(selectedIngredients(ingredients)))
-      .then(data => {
-        setRecipes(data);
+      .then(() => {
+        window.jQuery('.recipes-grid').isotope({
+          itemSelector: '.recipe-item',
+        });
       });
-  }, [ingredients]);
-
-  useLayoutEffect(() => {
-    window.jQuery('.recipes-grid').isotope({
-      itemSelector: '.recipe-item',
-    });
   }, [ingredients]);
 
   const clickHandler = e => {
@@ -70,12 +65,17 @@ const RecipesList = ({ dispatch, ingredients }) => {
 RecipesList.propTypes = {
   dispatch: PropTypes.func.isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
+  recipes: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    fetching: PropTypes.bool.isRequired,
+  }),
 };
 
 const mapStateToProps = state => {
-  const { filters } = state;
+  const { filters, recipes } = state;
   return {
     ingredients: filters,
+    recipesState: recipes,
   };
 };
 

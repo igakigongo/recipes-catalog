@@ -1,10 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const recipesSlice = createSlice({
-  initialState: [],
+  initialState: {
+    data: [],
+    fetching: false,
+  },
   name: 'recipes',
   reducers: {
-    loadRecipes: (state, action) => action.payload,
+    loadRecipes: (state, action) => {
+      state.data = action.payload;
+    },
   },
 });
 
