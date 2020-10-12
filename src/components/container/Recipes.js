@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import api from '../../api';
 import NoRecipesFound from '../presentational/NoRecipesFound';
-import Time from '../presentational/Time'
+import Time from '../presentational/Time';
 
 const selectedIngredients = ingredients => ingredients.filter(x => x.checked);
 
@@ -18,14 +18,18 @@ const RecipesList = ({ ingredients }) => {
 
   useLayoutEffect(() => {
     window.jQuery('.recipes-grid').isotope({
-      itemSelector: '.recipe-item'
+      itemSelector: '.recipe-item',
     });
   }, [ingredients]);
+
+  const clickHandler = e => {
+    e.preventDefault();
+  };
 
   return (recipes.length === 0 ? (<NoRecipesFound />) : (
     <div className="container-fluid">
       <div className="row recipes-grid">
-        {recipes.map(recipe => {
+        {recipes.map((recipe, index) => {
           const {
             id, image, readyInMinutes, title,
           } = recipe;
@@ -37,7 +41,13 @@ const RecipesList = ({ ingredients }) => {
 
           return (
             <div className="col col-lg-2 recipe-item" key={id}>
-              <div className="card mb-3 shadow">
+              <div
+                className="card mb-3 shadow"
+                onClick={clickHandler}
+                onKeyPress={clickHandler}
+                role="link"
+                tabIndex={index}
+              >
                 <img alt={image} className="card-img-top" src={`https://spoonacular.com/recipeImages/${id}-480x360.${imageType}`} />
                 <div className="card-body bg-warning">
                   <b>{title}</b>

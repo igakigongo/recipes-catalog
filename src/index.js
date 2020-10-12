@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import './index.css';
+import { BrowserRouter as Router } from 'react-router-dom';
 import App from './components/presentational/App';
 import store from './store';
 import { loadFilters } from './reducers/FiltersReducer';
@@ -15,4 +16,10 @@ const mappedIngredients = ingredients.map(x => ({
 
 store.dispatch(loadFilters(mappedIngredients));
 
-render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+render(
+  <Router>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </Router>, document.getElementById('root'),
+);

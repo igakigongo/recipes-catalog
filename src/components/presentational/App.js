@@ -1,11 +1,13 @@
 import React from 'react';
-import './App.scss';
 import SimpleBar from 'simplebar-react';
-import 'simplebar/dist/simplebar.min.css';
+import { Route, Switch } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
 import ConnectedFilter from '../container/Filter';
 import ConnectedIngredientsList from '../container/Ingredients';
 import ConnectedRecipesList from '../container/Recipes';
+import ROUTES from '../../routes';
+import './App.scss';
+import 'simplebar/dist/simplebar.min.css';
 
 const App = () => (
   <>
@@ -28,8 +30,14 @@ const App = () => (
     </aside>
     <main className="bg-white p-3">
       <SimpleBar style={{ maxHeight: '100%' }}>
-        <ConnectedIngredientsList />
-        <ConnectedRecipesList />
+        <Switch>
+          <Route path={ROUTES.HOME}>
+            <>
+              <ConnectedIngredientsList />
+              <ConnectedRecipesList />
+            </>
+          </Route>
+        </Switch>
       </SimpleBar>
     </main>
   </>
