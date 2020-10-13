@@ -16,10 +16,12 @@ const App = () => (
       <Navbar bg="dark" className="fixed-top" id="custom-navbar" variant="dark">
         <div className="container-fluid">
           <Navbar.Brand className="custom-brand">
-            Recipes&nbsp;
-            <span className="text-white">
-              Catalog
-            </span>
+            <a href="/">
+              Recipes&nbsp;
+              <span className="text-white">
+                Catalog
+              </span>
+            </a>
           </Navbar.Brand>
         </div>
       </Navbar>

@@ -34,19 +34,16 @@ const RecipeDetails = ({ dispatch, recipeDetails, recipes }) => {
 
   return (
     <div className="m-5">
-      <header
-        className="p-3 rounded-lg shadow-sm text-center"
-        style={{
-          backgroundColor: '#ffc107',
-          color: '#000',
-        }}
-      >
-        <h1>{recipe.title}</h1>
+      <p className="text-center">
+        <a href="/">********* All Recipes *********</a>
+      </p>
+      <header className="py-2 rounded-lg shadow-sm text-center recipe-details-header">
+        <h5 className="mt-2">{recipe.title}</h5>
       </header>
       {instructions.length === 0 && (
-      <div className="text-center">
-        No instructions found for this recipe
-      </div>
+        <div className="text-center">
+          No instructions found for this recipe
+        </div>
       )}
       {instructions.length > 0 && instructions
         .map(x => (
@@ -58,12 +55,11 @@ const RecipeDetails = ({ dispatch, recipeDetails, recipes }) => {
               <span>{x.step}</span>
             </div>
             {x.ingredients.length > 0 && (
-            <div className="px-3 ingredients shadow-lg">
-              <p className="mx-2 small py-1">
-                Ingredients:
-                {` ${x.ingredients.map(x => x.name).join(', ')}`}
-              </p>
-            </div>
+              <div className="px-3 ingredients shadow-lg">
+                <p className="mx-2 small py-1">
+                  {`Ingredients: ${x.ingredients.map(x => x.name).join(', ')}`}
+                </p>
+              </div>
             )}
           </div>
         ))}
