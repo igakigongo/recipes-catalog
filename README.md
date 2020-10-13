@@ -24,6 +24,15 @@ We list as much information as we can about the recipe as we can, such as
 
 For a live version of the application, please visit this [link](https://edward-recipes-catalog.herokuapp.com/) at heroku.
 
+### Testing
+In order to run tests, clone the repository on your machine, change to the root directory and install all dependencies using
+`npm install`
+
+use the following script to run all tests 
+```
+npm run test 
+```
+
 ### Authors/Developers
   * [Edward Iga Kigongo](github.com/igakigongo)
 
