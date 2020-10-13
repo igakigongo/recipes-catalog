@@ -1,6 +1,10 @@
 import { API_KEY, BASE_API_URL } from '../utils';
 import { loadRecipes, setFetching } from '../reducers/RecipesReducer';
-import { setFetchingRecipeInstructions } from '../reducers/RecipeDetailsReducer';
+import {
+  setFetchingRecipeInstructions,
+  setInstructions,
+  setRecipe,
+} from '../reducers/RecipeDetailsReducer';
 
 const axios = require('axios').default;
 
@@ -33,15 +37,19 @@ export const fetchRecipes = (ingredients = []) => dispatch => {
     });
 };
 
-export const fetchRecipeInstructions = id => dispatch => {
+export const fetchRecipeInstructions = id => (dispatch, getState) => {
   dispatch(setFetchingRecipeInstructions(true));
+  // console.log(getState());
+  const recipe = getState().recipes.data.find(x => x.id === id);
 
   return axios
     .get(`${BASE_API_URL}/recipes/${id}/analyzedInstructions?apiKey=${API_KEY}`)
     .then(({ data }) => {
-      console.log(data);
+      const { steps } = data[0];
+      dispatch(setRecipe(recipe));
+      dispatch(setInstructions(steps));
     })
     .finally(() => {
       dispatch(setFetchingRecipeInstructions(false));
     });
-}
+};

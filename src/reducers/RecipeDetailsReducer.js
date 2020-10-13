@@ -24,7 +24,7 @@ const recipeDetailsSlice = createSlice({
 export const {
   setFetchingRecipeInstructions,
   setInstructions,
-  setRecipe
+  setRecipe,
 } = recipeDetailsSlice.actions;
 
 export default recipeDetailsSlice.reducer;

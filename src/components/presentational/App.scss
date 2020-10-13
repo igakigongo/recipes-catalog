@@ -62,3 +62,13 @@ html, body, #root {
 .recipe-item {
   cursor: pointer;
 }
+
+.ingredients {
+  background-color: #000;
+  border-bottom-left-radius: 2px 3px;
+  border-bottom-right-radius: 2px 3px;  
+
+  p {
+    color: $yellow;
+  }
+}
