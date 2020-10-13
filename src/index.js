@@ -6,7 +6,7 @@ import App from './components/presentational/App';
 import store from './store';
 import { fetchRecipes } from './api';
 import { loadFilters } from './reducers/FiltersReducer';
-import './index.css';
+import './index.scss';
 
 const ingredients = require('./data/ingredients.json');
 
