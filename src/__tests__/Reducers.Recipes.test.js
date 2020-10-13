@@ -16,7 +16,7 @@ describe('Recipes Reducer', () => {
     }));
 
     store.dispatch(loadRecipes(fetchedRecipes));
-    const items = store.getState().recipes;
+    const { data: items } = store.getState().recipes;
     expect(items.length).toEqual(10);
   });
 });
