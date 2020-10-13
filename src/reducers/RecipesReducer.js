@@ -1,12 +1,21 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const recipesSlice = createSlice({
-  initialState: [],
+  initialState: {
+    data: [],
+    fetching: false,
+  },
   name: 'recipes',
   reducers: {
-    loadRecipes: (state, action) => action.payload,
+    loadRecipes: (state, action) => {
+      state.data = action.payload;
+    },
+    setFetching: (state, action) => {
+      state.fetching = action.payload;
+    },
   },
 });
 
-export const { loadRecipes } = recipesSlice.actions;
-export default recipesSlice;
+export const { loadRecipes, setFetching } = recipesSlice.actions;
+export default recipesSlice.reducer;

@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import filtersSlice from './FiltersReducer';
-import recipesSlice from './RecipesReducer';
+import filtersReducer from './FiltersReducer';
+import recipesReducer from './RecipesReducer';
+import recipeDetailsReducer from './RecipeDetailsReducer';
 
 export default combineReducers({
-  filters: filtersSlice.reducer,
-  recipes: recipesSlice.reducer,
+  filters: filtersReducer,
+  recipes: recipesReducer,
+  recipeDetails: recipeDetailsReducer,
 });

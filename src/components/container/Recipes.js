@@ -1,31 +1,37 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import api from '../../api';
+import { useHistory } from 'react-router-dom';
+import { BASE_URL } from '../../utils';
+import { fetchRecipes } from '../../api';
 import NoRecipesFound from '../presentational/NoRecipesFound';
-import Time from '../presentational/Time'
+import Time from '../presentational/Time';
+import ROUTES from '../../routes';
 
 const selectedIngredients = ingredients => ingredients.filter(x => x.checked);
 
-const RecipesList = ({ ingredients }) => {
-  const [recipes, setRecipes] = useState([]);
+const RecipesList = ({ dispatch, ingredients, recipesState: { data: recipes, fetching } }) => {
+  const history = useHistory();
   useEffect(() => {
-    api.getRecipes(selectedIngredients(ingredients))
-      .then(data => {
-        setRecipes(data);
-      });
+    dispatch(fetchRecipes(selectedIngredients(ingredients)));
   }, [ingredients]);
 
-  useLayoutEffect(() => {
-    window.jQuery('.recipes-grid').isotope({
-      itemSelector: '.recipe-item'
-    });
-  }, [ingredients]);
+  const clickHandler = recipeId => {
+    history.push(`${ROUTES.RECIPE_DETAILS}/${recipeId}`);
+  };
+
+  if (fetching) {
+    return (
+      <div style={{ textAlign: 'center' }}>
+        Loading.....!!
+      </div>
+    );
+  }
 
   return (recipes.length === 0 ? (<NoRecipesFound />) : (
     <div className="container-fluid">
       <div className="row recipes-grid">
-        {recipes.map(recipe => {
+        {recipes.map((recipe, index) => {
           const {
             id, image, readyInMinutes, title,
           } = recipe;
@@ -37,8 +43,18 @@ const RecipesList = ({ ingredients }) => {
 
           return (
             <div className="col col-lg-2 recipe-item" key={id}>
-              <div className="card mb-3 shadow">
-                <img alt={image} className="card-img-top" src={`https://spoonacular.com/recipeImages/${id}-480x360.${imageType}`} />
+              <div
+                className="card mb-3 shadow"
+                onClick={() => { clickHandler(id); }}
+                onKeyPress={() => { clickHandler(id); }}
+                role="link"
+                tabIndex={index}
+              >
+                <img
+                  alt={image}
+                  className="card-img-top"
+                  src={`${BASE_URL}/recipeImages/${id}-480x360.${imageType}`}
+                />
                 <div className="card-body bg-warning">
                   <b>{title}</b>
                 </div>
@@ -57,13 +73,19 @@ const RecipesList = ({ ingredients }) => {
 };
 
 RecipesList.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
+  recipesState: PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    fetching: PropTypes.bool.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = state => {
-  const { filters } = state;
+  const { filters, recipes } = state;
   return {
     ingredients: filters,
+    recipesState: recipes,
   };
 };
 

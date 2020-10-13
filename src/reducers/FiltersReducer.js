@@ -32,4 +32,4 @@ export const {
   loadFilters,
 } = filtersSlice.actions;
 
-export default filtersSlice;
+export default filtersSlice.reducer;

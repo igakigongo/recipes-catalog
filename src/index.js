@@ -1,10 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import './index.css';
+import { BrowserRouter as Router } from 'react-router-dom';
 import App from './components/presentational/App';
 import store from './store';
+import { fetchRecipes } from './api';
 import { loadFilters } from './reducers/FiltersReducer';
+import './index.scss';
 
 const ingredients = require('./data/ingredients.json');
 
@@ -14,5 +16,14 @@ const mappedIngredients = ingredients.map(x => ({
 }));
 
 store.dispatch(loadFilters(mappedIngredients));
+store.dispatch(fetchRecipes());
 
-render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+render(
+  <Router>
+    <React.StrictMode>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </React.StrictMode>
+  </Router>, document.getElementById('root'),
+);

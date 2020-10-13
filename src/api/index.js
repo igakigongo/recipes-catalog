@@ -1,25 +1,55 @@
+import { API_KEY, BASE_API_URL } from '../utils';
+import { loadRecipes, setFetching } from '../reducers/RecipesReducer';
+import {
+  setFetchingRecipeInstructions,
+  setInstructions,
+  setRecipe,
+} from '../reducers/RecipeDetailsReducer';
+
 const axios = require('axios').default;
 
-const api = (() => {
-  const API_KEY = 'feafd5b56495493bab1d19fd4290f57c';
-  const BASE_URL = 'https://api.spoonacular.com/recipes';
-  /**
-   * Get all recipes from the API
-   */
-  const getRecipes = async (ingredients = []) => {
-    if (ingredients.length === 0) {
-      const { data } = await axios.get(`${BASE_URL}/search?apiKey=${API_KEY}&number=50`);
-      return data.results;
-    }
+/**
+ * Get all recipes from the API
+ */
+export const fetchRecipes = (ingredients = []) => dispatch => {
+  dispatch(setFetching(true));
 
-    const query = ingredients.map(x => x.name).join('');
-    const { data } = await axios.get(`${BASE_URL}/findByIngredients?apiKey=${API_KEY}&ingredients=${query}`);
-    return data;
-  };
+  if (ingredients.length === 0) {
+    return axios
+      .get(`${BASE_API_URL}/recipes/search?apiKey=${API_KEY}&number=50`)
+      .then(({ data: { results } }) => {
+        dispatch(loadRecipes(results));
+      })
+      .finally(() => {
+        dispatch(setFetching(false));
+      });
+  }
 
-  return {
-    getRecipes,
-  };
-})();
+  dispatch(setFetching(true));
+  const query = ingredients.map(x => x.name).join('');
+  return axios
+    .get(`${BASE_API_URL}/recipes/findByIngredients?apiKey=${API_KEY}&ingredients=${query}`)
+    .then(({ data }) => {
+      dispatch(loadRecipes(data));
+    })
+    .finally(() => {
+      dispatch(setFetching(false));
+    });
+};
 
-export default api;
+export const fetchRecipeInstructions = id => (dispatch, getState) => {
+  dispatch(setFetchingRecipeInstructions(true));
+  // console.log(getState());
+  const recipe = getState().recipes.data.find(x => x.id === id);
+
+  return axios
+    .get(`${BASE_API_URL}/recipes/${id}/analyzedInstructions?apiKey=${API_KEY}`)
+    .then(({ data }) => {
+      const { steps } = data[0];
+      dispatch(setRecipe(recipe));
+      dispatch(setInstructions(steps));
+    })
+    .finally(() => {
+      dispatch(setFetchingRecipeInstructions(false));
+    });
+};
